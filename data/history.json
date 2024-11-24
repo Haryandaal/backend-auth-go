@@ -1,0 +1,14 @@
+[
+  {
+    "id": "66e167f6-fcf3-4a22-9e28-22f306bd3869",
+    "action": "Login",
+    "detail": "haryanda@example.com logged in",
+    "date": "2024-11-24 12:29:38"
+  },
+  {
+    "id": "7d447ae8-6d4d-43b4-ac8b-4e041e870996",
+    "action": "Payment",
+    "detail": "1 sent alfan@example.coman amount of 100.00",
+    "date": "2024-11-24 12:30:00"
+  }
+]

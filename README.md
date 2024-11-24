@@ -47,6 +47,7 @@ This project is a backend API designed to simulate interactions between merchant
 2. **Merchant Login**
 
    POST `/login`  -> login for customer
+   
    POST `/merchant/login` -> login for merchant
 
    Request

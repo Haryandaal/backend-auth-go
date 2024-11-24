@@ -10,8 +10,8 @@ var secretKey = []byte("credentials")
 
 func GenerateToken(userId string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"user_id": userId,
-		"exp":     time.Now().Add(time.Hour * 24).Unix(),
+		"id":  userId,
+		"exp": time.Now().Add(time.Hour * 24).Unix(),
 	})
 	return token.SignedString(secretKey)
 }
@@ -25,7 +25,7 @@ func ValidateToken(tokenStr string) (string, error) {
 	}
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		userId, ok := claims["user_id"].(string)
+		userId, ok := claims["id"].(string)
 		if !ok {
 			return "", errors.New("invalid token claims")
 		}

@@ -27,6 +27,27 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]string{"token": token})
 }
 
+func MerchantLoginHandler(w http.ResponseWriter, r *http.Request) {
+	var merchantLoginReq struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	}
+	err := json.NewDecoder(r.Body).Decode(&merchantLoginReq)
+	if err != nil {
+		http.Error(w, "Invalid request", http.StatusBadRequest)
+		return
+	}
+
+	token, err := services.MerchantLogin(merchantLoginReq.Email, merchantLoginReq.Password)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusUnauthorized)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{"token": token})
+}
+
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	var logoutRequest struct {
 		Email string `json:"email"`

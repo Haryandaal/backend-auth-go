@@ -46,7 +46,8 @@ This project is a backend API designed to simulate interactions between merchant
    ```
 2. **Merchant Login**
 
-   POST `/login`
+   POST `/login`  -> login for customer
+   POST `/merchant/login` -> login for merchant
 
    Request
    ```json
@@ -55,7 +56,7 @@ This project is a backend API designed to simulate interactions between merchant
       "password" : "password"
    }
    ```
-3. **Payments**
+4. **Payments**
 
    POST `/payment`
 
@@ -74,7 +75,7 @@ This project is a backend API designed to simulate interactions between merchant
       "message" : "message successful"
    }
    ```
-4. **Payments**
+5. **Payments**
 
    POST `/logout`
 

@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "id": "13af9a54-50d7-4cd7-b124-51275b76c671",
+    "action": "Merchant Login",
+    "detail": "merchantA@example.com logged in as merchant",
+    "date": "2024-11-24 19:25:52"
+  },
+  {
+    "id": "34cfccd4-443e-4225-afaf-64c7dbdcf091",
+    "action": "Merchant Payment",
+    "detail": "Merchant A transferred 100.00 to Merchant A",
+    "date": "2024-11-24 19:26:18"
+  }
+]

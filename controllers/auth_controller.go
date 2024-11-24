@@ -6,7 +6,11 @@ import (
 	"net/http"
 )
 
-func LoginHandler(w http.ResponseWriter, r *http.Request) {
+type AuthController struct {
+	AuthService services.AuthServiceInterface
+}
+
+func (c *AuthController) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	var loginRequest struct {
 		Email    string `json:"email"`
 		Password string `json:"password"`
@@ -17,7 +21,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	token, err := services.Login(loginRequest.Email, loginRequest.Password)
+	token, err := c.AuthService.Login(loginRequest.Email, loginRequest.Password)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
@@ -27,7 +31,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]string{"token": token})
 }
 
-func MerchantLoginHandler(w http.ResponseWriter, r *http.Request) {
+func (c *AuthController) MerchantLoginHandler(w http.ResponseWriter, r *http.Request) {
 	var merchantLoginReq struct {
 		Email    string `json:"email"`
 		Password string `json:"password"`
@@ -38,7 +42,7 @@ func MerchantLoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token, err := services.MerchantLogin(merchantLoginReq.Email, merchantLoginReq.Password)
+	token, err := c.AuthService.MerchantLogin(merchantLoginReq.Email, merchantLoginReq.Password)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return

@@ -10,5 +10,11 @@
     "action": "Merchant Payment",
     "detail": "Merchant A transferred 100.00 to Merchant A",
     "date": "2024-11-24 19:26:18"
+  },
+  {
+    "id": "6f8ea11e-8fab-4fd2-8dc5-81463feff54e",
+    "action": "Merchant Login",
+    "detail": "merchantA@example.com logged in as merchant",
+    "date": "2024-11-25 20:13:14"
   }
 ]

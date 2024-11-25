@@ -45,7 +45,7 @@ func (c *PaymentController) PaymentHandler(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	err = c.PaymentService.ProcessPayment(userId, paymentRequest.ToEmail, float64(paymentRequest.Amount))
+	err = c.PaymentService.ProcessPayment(userId, paymentRequest.ToEmail, int64(paymentRequest.Amount))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
@@ -78,8 +78,8 @@ func (c *PaymentController) MerchantPaymentHandler(w http.ResponseWriter, r *htt
 
 	// Decode request body
 	var paymentRequest struct {
-		BankID string  `json:"bank_id"`
-		Amount float64 `json:"amount"`
+		BankID string `json:"bank_id"`
+		Amount int64  `json:"amount"`
 	}
 
 	err = json.NewDecoder(r.Body).Decode(&paymentRequest)

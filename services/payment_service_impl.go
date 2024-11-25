@@ -27,7 +27,7 @@ func (s *PaymentService) ProcessPayment(fromEmail, toEmail string, amount int64)
 	})
 }
 
-func (s *PaymentService) MerchantToBankPayment(merchantId, bankID string, amount float64) error {
+func (s *PaymentService) MerchantToBankPayment(merchantId, bankID string, amount int64) error {
 	// Validate merchant
 	merchant, err := repositories.GetMerchantById(merchantId)
 	if err != nil || merchant == nil {

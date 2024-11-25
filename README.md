@@ -13,8 +13,8 @@ This project is a backend API designed to simulate interactions between merchant
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Haryandaal/backend-auth-go
-   cd backend-auth-go
+   git clone https://github.com/Haryandaal/merchant-bank-transaction
+   cd merchant-bank-transaction
    ```
 2. Install dependencies:
     ```bash

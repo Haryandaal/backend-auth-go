@@ -2,13 +2,17 @@ package controllers
 
 import (
 	"backend-test/services"
-	"backend-test/utils"
 	"encoding/json"
 	"net/http"
 	"strings"
 )
 
-func PaymentHandler(w http.ResponseWriter, r *http.Request) {
+type PaymentController struct {
+	PaymentService    services.PaymentServiceInterface
+	ValidateTokenFunc func(token string) (string, error)
+}
+
+func (c *PaymentController) PaymentHandler(w http.ResponseWriter, r *http.Request) {
 	// get token from header Authorization
 	authHeader := r.Header.Get("Authorization")
 	if authHeader == "" {
@@ -24,7 +28,7 @@ func PaymentHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	token := tokenParts[1]
-	userId, err2 := utils.ValidateToken(token)
+	userId, err2 := c.ValidateTokenFunc(token)
 	if err2 != nil {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
@@ -41,7 +45,7 @@ func PaymentHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = services.ProcessPayment(userId, paymentRequest.ToEmail, float64(paymentRequest.Amount))
+	err = c.PaymentService.ProcessPayment(userId, paymentRequest.ToEmail, float64(paymentRequest.Amount))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
@@ -50,7 +54,7 @@ func PaymentHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]string{"message": "Payment successful"})
 }
 
-func MerchantPaymentHandler(w http.ResponseWriter, r *http.Request) {
+func (c *PaymentController) MerchantPaymentHandler(w http.ResponseWriter, r *http.Request) {
 	// get token from header Authorization
 	authHeader := r.Header.Get("Authorization")
 	if authHeader == "" {
@@ -66,7 +70,7 @@ func MerchantPaymentHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	token := tokenParts[1]
-	merchantID, err := utils.ValidateToken(token)
+	merchantID, err := c.ValidateTokenFunc(token)
 	if err != nil {
 		http.Error(w, "unauthorized", http.StatusUnauthorized)
 		return
@@ -85,7 +89,7 @@ func MerchantPaymentHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// do payment
-	err = services.MerchantToBankPayment(merchantID, paymentRequest.BankID, paymentRequest.Amount)
+	err = c.PaymentService.MerchantToBankPayment(merchantID, paymentRequest.BankID, paymentRequest.Amount)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
